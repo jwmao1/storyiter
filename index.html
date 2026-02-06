@@ -4,7 +4,7 @@
     <!-- Meta and Title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story-Adapter</title>
+    <title>Story-Iter</title>
 
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
     <header>
         <!-- Existing header content -->
         <div class="container">
-            <h1>Story-Adapter: A Training-free Iterative Framework</h1>
+            <h1>Story-Iter: A Training-free Iterative Paradigm</h1>
             <br/> 
             <br/>
             <br/>
@@ -46,20 +46,26 @@
             <div class="details">
                 <a href="https://github.com/jwmao1" target="_blank">Jiawei Mao</a> <sup>* 1,2</sup>, 
                 <a href="https://xk-huang.github.io/" target="_blank">Xiaoke Huang</a> <sup>* 1</sup>, 
-                <a href="https://yunfeixie233.github.io/" target="_blank">Yunfei Xie</a> <sup>1</sup>, 
+                <a href="https://yunfeixie233.github.io/" target="_blank">Yunfei Xie</a> <sup>4</sup>, 
                 <a href="" target="_blank">Yuanqi Chang</a> <sup>2</sup>, 
                 <a href="https://thefllood.github.io/mudehui.github.io/" target="_blank">Mude Hui</a> <sup>1</sup>, 
                 <a href="https://scholar.google.com/citations?user=JHTNigYAAAAJ&hl=en" target="_blank">Bingjie Xu</a> <sup>3</sup>, 
+                <a href="https://zheng80.github.io/" target="_blank">Zeyu Zheng</a> <sup>5</sup>,
+                <a href="https://scholar.google.com/citations?user=GgD-B68AAAAJ&hl=en" target="_blank">Zirui Wang</a> <sup>6</sup>,
+                <a href="https://cihangxie.github.io/" target="_blank">Cihang Xie</a> <sup>1</sup>,
                 <a href="https://yuyinzhou.github.io/" target="_blank">Yuyin Zhou</a> <sup>1</sup>
             </div>
             <div class="details">
                 <sup>1</sup><a href="https://ucsc-vlaa.github.io/" target="_blank">UC Santa Cruz</a>, 
                 <sup>2</sup><a href="https://en.hdu.edu.cn/" target="_blank">Hangzhou Dianzi University</a>, 
-                <sup>3</sup><a href="https://www.singaporetech.edu.sg/" target="_blank">Singapore Institute of Technology</a>
+                <sup>3</sup><a href="https://www.singaporetech.edu.sg/" target="_blank">Singapore Institute of Technology</a>,
+                <sup>4</sup><a href="https://www.singaporetech.edu.sg/" target="_blank">Rice University</a>,
+                <sup>5</sup><a href="https://bair.berkeley.edu/" target="_blank">UC Berkeley</a>,
+                <sup>6</sup><a href="apple.com" target="_blank">Apple</a>,
             </div>
             <div class="details"><sup>*</sup>Equal Contribution</div>
             <div class="links">
-                <a href="https://github.com/jwmao1/story-adapter" target="_blank">
+                <a href="https://github.com/jwmao1/Story-Iter" target="_blank">
                     <i class="fab fa-github"></i> GitHub
                 </a>
                 <a href="https://arxiv.org/abs/2410.06244" target="_blank">
@@ -75,16 +81,14 @@
             </div>
             <h2>Abstract</h2>
             <div class="abs">
-                Story visualization, the task of generating coherent images based on a narrative, has seen significant advancements with the emergence of text-to-image models, particularly diffusion models. However, maintaining semantic consistency, generating high-quality fine-grained interactions, and ensuring computational feasibility remain challenging, especially in long story visualization (i.e., up to 100 frames).  
-                In this work, we propose a training-free and computationally efficient framework, termed Story-Adapter, to enhance the generative capability of long stories. Specifically, we propose an iterative paradigm to refine each generated image, leveraging both the text prompt and all generated images from the previous iteration. 
-                Central to our framework is a training-free global reference cross-attention module, which aggregates all generated images from the previous iteration to preserve semantic consistency across the entire story, while minimizing computational costs with global embeddings. This iterative process progressively optimizes image generation by repeatedly incorporating text constraints, resulting in more precise and fine-grained interactions. Extensive experiments validate the superiority of Story-Adapter in improving both semantic consistency and generative capability for fine-grained interactions, particularly in long story scenarios.
+                Story visualization, the task of generating coherent images based on a narrative, has seen significant advancements with the emergence of text-to-image models, particularly diffusion models. However, maintaining semantic consistency, generating high-quality fine-grained interactions, and ensuring computational feasibility remain challenging, especially in long story visualization (_i.e._, up to 100 frames). In this work, we introduce **Story-Iter**, a new training-free iterative paradigm to enhance long-story generation. Unlike existing methods that rely on fixed reference images to construct a complete story, our approach features a novel external \textbf{iterative paradigm}, extending beyond the internal iterative denoising steps of diffusion models, to continuously refine each generated image by incorporating all reference images from the previous round. To achieve this, we propose a plug-and-play, training-free **g**lobal **r**eference **c**ross-**a**ttention (**GRCA**) module, modeling all reference frames with global embeddings, ensuring semantic consistency in long sequences. By progressively incorporating holistic visual context and text constraints, our iterative paradigm enables precise generation with fine-grained interactions, optimizing the story visualization step-by-step. Extensive experiments in the official story visualization dataset and our long story benchmark demonstrate that Story-Iter's state-of-the-art performance in long-story visualization (up to 100 frames) excels in both semantic consistency and fine-grained interactions.
             </div>
         </section>
 
         <section class="section section-other">
-            <h2>Story-Adapter Architecture</h2>
+            <h2>Story-Iter Architecture</h2>
             <div class="abs">
-                Story-Adapter framework. Illustration of the proposed iterative paradigm, which consists of initialization, iterations in Story-Adapter, and implementation of Global Reference Cross-Attention (GRCA). Story-Adapter first visualizes each image only based on the text prompt of the story and uses all results as reference images for the future round. In the iterative paradigm, Story-Adapter inserts GRCA into SD. For the ith iteration of each image visualization, GRCA will aggregate the information flow of all reference images during the denoising process through cross-attention. All results from this iteration will be used as a reference image to guide the dynamic update of the story visualization in the next iteration. 
+                Story-Iter framework. Illustration of the proposed iterative paradigm, which consists of initialization, iterations in Story-Iter, and implementation of Global Reference Cross-Attention (GRCA). Story-Iter first visualizes each image only based on the text prompt of the story and uses all results as reference images for the future round. In the iterative paradigm, Story-Iter inserts GRCA into SD. For the ith iteration of each image visualization, GRCA will aggregate the information flow of all reference images during the denoising process through cross-attention. All results from this iteration will be used as a reference image to guide the dynamic update of the story visualization in the next iteration. 
             </div>
             <div class="add-div">
                 <img src="images/images/architecture.jpg" style="width: 100%;"/>
@@ -98,62 +102,62 @@
                 <!-- 视频 1 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video1.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Pigeon" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Pigeon" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 2 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video2.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Dinosaur and Traveler" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Dinosaur and Traveler" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 3 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video3.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Boy" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Boy" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 4 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video4.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Pepper" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Pepper" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 5 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video5.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Gril" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Gril" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 6 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video6.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Animal Rescuer" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Animal Rescuer" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 7 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video7.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "City Monkey" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "City Monkey" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 8 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video8.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Old Man and Monkey" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Old Man and Monkey" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 9 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video9.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "The Boy's Journey" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "The Boy's Journey" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 10 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video10.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "A Day for a Girl" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "A Day for a Girl" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 11 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video11.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Rain" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Rain" visualized by our Story-Iter</div>
                 </div>
                 <!-- 视频 12 -->
                 <div class="video-item">
                     <video src="images/video_regular_length/video12.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Fruit" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Fruit" visualized by our Story-Iter</div>
                 </div>
             </div>
         </section>
@@ -165,52 +169,52 @@
                 <!-- 50-length 视频 1 -->
                 <div class="video-item">
                     <video src="images/video_long_length/50/video1.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Little Red Riding Hood" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Little Red Riding Hood" visualized by our Story-Iter</div>
                 </div>
                 <!-- 50-length 视频 2 -->
                 <div class="video-item">
                     <video src="images/video_long_length/50/video2.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Emperor and the Nightingale" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Emperor and the Nightingale" visualized by our Story-Iter</div>
                 </div>
                 <!-- 50-length 视频 3 -->
                 <div class="video-item">
                     <video src="images/video_long_length/50/video3.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Robinson Crusoe" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Robinson Crusoe" visualized by our Story-Iter</div>
                 </div>
                 <!-- 50-length 视频 4 -->
                 <div class="video-item">
                     <video src="images/video_long_length/50/video4.mp4" autoplay controls muted></video>
-                     <div class="video-title">A story of "Snowman" visualized by our Story-Adapter</div>
+                     <div class="video-title">A story of "Snowman" visualized by our Story-Iter</div>
                 </div>
                 <!-- 50-length 视频 5 -->
                 <div class="video-item">
                     <video src="images/video_long_length/50/video5.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Loyal Dog" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Loyal Dog" visualized by our Story-Iter</div>
                 </div>
                 <!-- 100-length 视频 1 -->
                 <div class="video-item">
                     <video src="images/video_long_length/100/long_video1.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "The Tortoise and the Hare" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "The Tortoise and the Hare" visualized by our Story-Iter</div>
                 </div>
                 <!-- 100-length 视频 2 -->
                 <div class="video-item">
                     <video src="images/video_long_length/100/long_video2.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Winnie the Pooh" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Winnie the Pooh" visualized by our Story-Iter</div>
                 </div>
                 <!-- 100-length 视频 3 -->
                 <div class="video-item">
                     <video src="images/video_long_length/100/long_video3.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Pirate" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Pirate" visualized by our Story-Iter</div>
                 </div>
                 <!-- 100-length 视频 4 -->
                 <div class="video-item">
                     <video src="images/video_long_length/100/long_video4.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "Lonely Me" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "Lonely Me" visualized by our Story-Iter</div>
                 </div>
                 <!-- 100-length 视频 5 -->
                 <div class="video-item">
                     <video src="images/video_long_length/100/long_video5.mp4" autoplay controls muted></video>
-                    <div class="video-title">A story of "The Prince and the Princess" visualized by our Story-Adapter</div>
+                    <div class="video-title">A story of "The Prince and the Princess" visualized by our Story-Iter</div>
                 </div>
             </div>
         </section>
@@ -218,7 +222,7 @@
 
         <section class="section section-other">
             <h2>Qualitative Comparison of  Different Methods</h2>
-            <div class="abs">Qualitative comparison of story visualization shows AR-LDM and StoryGen generate coherent image sequences but degrade with story length due to autoregressive errors. StoryDiffusion and Story-Adapter perform well, though StoryDiffusion struggles with subject consistency and ID image flaws due to high computation demands. Story-Adapter better meets the requirements for effective story visualization.</div>
+            <div class="abs">Qualitative comparison of story visualization shows AR-LDM and StoryGen generate coherent image sequences but degrade with story length due to autoregressive errors. StoryDiffusion and Story-Iter perform well, though StoryDiffusion struggles with subject consistency and ID image flaws due to high computation demands. Story-Iter better meets the requirements for effective story visualization.</div>
             <div class="add-div">
                 <img src="images/images/Qualitative Comparison of StorySalon Story.png" style="width: 100%;"/>
             </div>
